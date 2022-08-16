@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="./src/img/logo_teste.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./src/css/geral.css">
+    <title>PEDIDO WPP</title>
+</head>
+
+<body>
+    <div class="container mt-3">
+        <div class="col-12 row d-flex justify-content-center">
+            <img src="./src/img/logo_teste.png" alt="logo" class="logo">
+        </div>
+        <hr>
+        <form class="g-3" action="#" method="post">
+            <!-- DADOS DO USUÁRIO -->
+            <div id="dados_usuario" class="row mt-4">
+                <div class="col-md-4">
+                    <label for="nome" class="form-label">Nome</label>
+                    <input type="text" name="nome" id="nome" class="form-control">
+                    <div class="alert alert-warning fade show mt-2 alerta-validacao" role="alert" id="validacao-nome"
+                        style="display: none;">
+                        preencha este campo!
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="telefone" class="form-label">Telefone</label>
+                    <input type="text" name="telefone" id="telefone" class="form-control telefone">
+                    <div class="alert alert-warning fade show mt-2 alerta-validacao" role="alert"
+                        id="validacao-telefone" style="display: none;">
+                        preencha este campo!
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="telefone" class="form-label">CEP</label>
+                    <input type="text" name="cep" id="cep" class="form-control">
+                    <div class="alert alert-warning fade show mt-2 alerta-validacao" role="alert" id="validacao-cep"
+                        style="display: none;">
+                        preencha este campo!
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label for="rua" class="form-label">Rua</label>
+                    <input type="text" name="rua" id="rua" class="form-control" readonly>
+                </div>
+                <div class="col-md-4">
+                    <label for="bairro" class="form-label">Bairro</label>
+                    <input type="text" name="bairro" id="bairro" class="form-control" readonly>
+                </div>
+                <div class="col-md-2">
+                    <label for="taxa_entrega" class="form-label">Taxa de Entrega</label>
+                    <input type="text" name="taxa_entrega" id="taxa_entrega" class="form-control" readonly>
+                </div>
+                <div class="col-md-2">
+                    <label for="numero" class="form-label">Nº</label>
+                    <input type="number" name="numero" id="numero" class="form-control">
+                    <div class="alert alert-warning fade show mt-2 alerta-validacao" role="alert" id="validacao-numero"
+                        style="display: none;">
+                        preencha este campo!
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label for="residencia" class="form-label">Residência</label>
+                    <select id="residencia" class="form-select">
+                        <option disabled selected>Selecione...</option>
+                        <option value="Casa">Casa</option>
+                        <option value="Apartamento">Apartamento</option>
+                    </select>
+                </div>
+                
+                <div class="col-md-2 res_ap" style="display: none;">
+                    <label for="apartamento" class="form-label">Apartamento</label>
+                    <input type="number" name="apartamento" id="apartamento" class="form-control">
+                </div>
+                <div class="col-md-2 res_ap" style="display: none;">
+                    <label for="bloco" class="form-label">Bloco</label>
+                    <input type="text" name="bloco" id="bloco" class="form-control" style="text-transform: capitalize;">
+                </div>
+                <div class="col-12 mt-3" id="proximo">
+                    <button type="submit" class="btn etapa_1">Próxima Etapa</button>
+                </div>
+            </div>
+
+            <!-- PEDIDO DE LANCHE -->
+            <div class="row mt-3" id="pedido_lanche" style="display: none;">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="lanche" class="form-label">Lanche</label>
+                        <select id="lanche" class="form-select">
+                            <option disabled selected>Selecione...</option>
+                            <option value="PARRILLA BERRY">PARRILLA BERRY</option>
+                            <option value="PARRILLA BERRY COMBO">PARRILLA BERRY COMBO</option>
+                            <option value="PARRILLA CANDY">PARRILLA CANDY</option>
+                            <option value="PARRILLA GRILLED HERBS">PARRILLA GRILLED HERBS</option>
+                            <option value="PARRILLA GRILLED HERBS COMBO">PARRILLA GRILLED HERBS COMBO</option>
+                            <option value="PARRILLA BURGER">PARRILLA BURGER</option>
+                            <option value="PARRILLA BURGER COMBO">PARRILLA BURGER COMBO</option>
+                            <option value="PARRILLA CATUPIRY ANGUS">PARRILLA CATUPIRY ANGUS</option>
+                            <option value="PARRILLA CATUPIRY ANGUS COMBO">PARRILLA CATUPIRY ANGUS COMBO</option>
+                            <option value="PARRILLA CLÁSSIC">PARRILLA CLÁSSIC</option>
+                            <option value="PARRILLA CLÁSSIC COMBO">PARRILLA CLÁSSIC COMBO</option>
+                            <option value="PARRILLA SPECIAL DUPLO">PARRILLA SPECIAL DUPLO</option>
+                            <option value="PARRILLA SPECIAL DUPLO COMBO">PARRILLA SPECIAL DUPLO COMBO</option>
+                            <option value="PARRILLA CHICKEN">PARRILLA CHICKEN</option>
+                            <option value="PARRILLA CHICKEN COMBO">PARRILLA CHICKEN COMBO</option>
+                        </select>
+                        <div class="form-group mt-3">
+                            <label for="preco_lanche">Preço</label>
+                            <input type="text" class="form-control mt-1" id="preco_lanche" readonly>
+                        </div>
+                        <div class="form-group mt-3">
+                            <label for="observacoes">Observações</label>
+                            <textarea id="observacoes" class="form-control mt-1" name="" rows="3" placeholder="Tem algo a acrescentar?"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- IMAGENS LANCHES -->
+                    <div class="col-md-4 d-flex justify-content-center">
+                        <img src="./src/img/sem_imagem.png" alt="" class="img-lanche berry" style="display: none;" >
+                        <img src="./src/img/sem_imagem.png" alt="" class="img-lanche berry_combo" style="display: none;" >
+                        <img src="./src/img/sem_imagem.png" alt="" class="img-lanche candy" style="display: none;" >
+                        <img src="./src/img/sem_imagem.png" alt="" class="img-lanche parrilla_grilled_herbs" style="display: none;" >
+                        <img src="./src/img/sem_imagem.png" alt="" class="img-lanche parrilla_grilled_herbs_combo" style="display: none;" >
+                        <img src="./src/img/sem_imagem.png" alt="" class="img-lanche burguer" style="display: none;" >
+                        <img src="./src/img/sem_imagem.png" alt="" class="img-lanche burguer_combo" style="display: none;" >
+                        <img src="./src/img/sem_imagem.png" alt="" class="img-lanche catupiry_angus" style="display: none;" >
+                        <img src="./src/img/sem_imagem.png" alt="" class="img-lanche catupiry_angus_combo" style="display: none;" >
+                        <img src="./src/img/sem_imagem.png" alt="" class="img-lanche classic" style="display: none;" >
+                        <img src="./src/img/sem_imagem.png" alt="" class="img-lanche classic_combo" style="display: none;" >
+                        <img src="./src/img/sem_imagem.png" alt="" class="img-lanche special" style="display: none;" >
+                        <img src="./src/img/sem_imagem.png" alt="" class="img-lanche special_combo" style="display: none;" >
+                        <img src="./src/img/sem_imagem.png" alt="" class="img-lanche chicken" style="display: none;" >
+                        <img src="./src/img/sem_imagem.png" alt="" class="img-lanche chicken_combo" style="display: none;" >
+                    </div>
+                    
+                    <!-- INGREDIENTES LANCHES -->
+                    <div class="col-md-4 mt-4">
+                        <div class="berry flex-column" style="display: none;">
+                            <div>
+                                <h4>Ingredientes: </h4>
+                            </div>
+                            <div>
+                                <ul>
+                                    <li>Pão brioche</li>
+                                    <li>Hambúrguer de cupim</li>
+                                    <li>Queijo cheddar cremoso</li>
+                                    <li>Cebola roxa</li>
+                                    <li>Bacon</li>
+                                    <li>Geleia de pimenta</li>
+                                    <li>Doritos</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="berry_combo flex-column" style="display: none;">
+                            <div>
+                                <h4>Ingredientes: </h4>
+                            </div>
+                            <div>
+                                <ul>
+                                    <li>Pão brioche</li>
+                                    <li>Hambúrguer de cupim</li>
+                                    <li>Queijo cheddar cremoso</li>
+                                    <li>Cebola roxa</li>
+                                    <li>Bacon</li>
+                                    <li>Geleia de pimenta</li>
+                                    <li>Doritos</li>
+                                </ul>
+                                <hr>
+                                <ul>
+                                    <li>1 Coca cola lata</li>
+                                    <li>1 Porção de batata frita</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="candy flex-column" style="display: none;">
+                            <div>
+                                <h4>Ingredientes: </h4>
+                            </div>
+                            <div>
+                                <ul>
+                                    <li>Pão brioche</li>
+                                    <li>Doce de leite</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="parrilla_grilled_herbs flex-column" style="display: none;">
+                            <div>
+                                <h4>Ingredientes: </h4>
+                            </div>
+                            <div>
+                                <ul>
+                                    <li>Pão Francês</li>
+                                    <li>Hambúrguer de Fraldinha</li>
+                                    <li>Queijo Prato</li>
+                                    <li>Cebola Roxa</li>
+                                    <li>Bacon</li>
+                                    <li>Alface</li>
+                                    <li>Molho de maionese com ervas</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="parrilla_grilled_herbs_combo flex-column" style="display: none;">
+                            <div>
+                                <h4>Ingredientes: </h4>
+                            </div>
+                            <div>
+                                <ul>
+                                    <li>Pão Francês</li>
+                                    <li>Hambúrguer de Fraldinha</li>
+                                    <li>Queijo Prato</li>
+                                    <li>Cebola Roxa</li>
+                                    <li>Bacon</li>
+                                    <li>Alface</li>
+                                    <li>Molho de maionese com ervas</li>
+                                </ul>
+                                <hr>
+                                <ul>
+                                    <li>1 Coca cola lata</li>
+                                    <li>1 Porção de batata frita</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="burguer flex-column" style="display: none;">
+                            <div>
+                                <h4>Ingredientes: </h4>
+                            </div>
+                            <div>
+                                <ul>
+                                    <li>Pão de Francês</li>
+                                    <li>Hambúrguer de Angus</li>
+                                    <li>Queijo cheddar</li>
+                                    <li>Bacon</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="burguer_combo flex-column" style="display: none;">
+                            <div>
+                                <h4>Ingredientes: </h4>
+                            </div>
+                            <div>
+                                <ul>
+                                    <li>Pão de Francês</li>
+                                    <li>Hambúrguer de Angus</li>
+                                    <li>Queijo cheddar</li>
+                                    <li>Bacon</li>
+                                </ul>
+                                <hr>
+                                <ul>
+                                    <li>1 Coca cola lata</li>
+                                    <li>1 Porção de batata frita</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="catupiry_angus flex-column" style="display: none;">
+                            <div>
+                                <h4>Ingredientes: </h4>
+                            </div>
+                            <div>
+                                <ul>
+                                    <li>Pão Australiano</li>
+                                    <li>Hambúrguer de Angus</li>
+                                    <li>Alface</li>
+                                    <li>Tomate</li>
+                                    <li>Catupiry Empanado</li>
+                                    <li>Cheddar fatia</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="catupiry_angus_combo flex-column" style="display: none;">
+                            <div>
+                                <h4>Ingredientes: </h4>
+                            </div>
+                            <div>
+                                <ul>
+                                    <li>Pão Australiano</li>
+                                    <li>Hambúrguer de Angus</li>
+                                    <li>Alface</li>
+                                    <li>Tomate</li>
+                                    <li>Catupiry Empanado</li>
+                                    <li>Cheddar fatia</li>
+                                </ul>
+                                <ul>
+                                    <li>1 Coca cola lata</li>
+                                    <li>1 Porção de batata frita</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="classic flex-column" style="display: none;">
+                            <div>
+                                <h4>Ingredientes: </h4>
+                            </div>
+                            <div>
+                                <ul>
+                                    <li>Pão francês</li>
+                                    <li>Hambúrguer de Cupim</li>
+                                    <li>Queijo prato</li>
+                                    <li>Alface</li>
+                                    <li>Tomate</li>
+                                    <li>Catupiry</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="classic_combo flex-column" style="display: none;">
+                            <div>
+                                <h4>Ingredientes: </h4>
+                            </div>
+                            <div>
+                                <ul>
+                                    <li>Pão francês</li>
+                                    <li>Hambúrguer de Cupim</li>
+                                    <li>Queijo prato</li>
+                                    <li>Alface</li>
+                                    <li>Tomate</li>
+                                    <li>Catupiry</li>
+                                </ul>
+                                <hr>
+                                <ul>
+                                    <li>1 Coca cola lata</li>
+                                    <li>1 Porção de batata frita</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="special flex-column" style="display: none;">
+                            <div>
+                                <h4>Ingredientes: </h4>
+                            </div>
+                            <div>
+                                <ul>
+                                    <li>Pão Brioche</li>
+                                    <li>2 Hambúrgueres de Angus</li>
+                                    <li>Cheddar</li>
+                                    <li>Bacon</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="special_combo flex-column" style="display: none;">
+                            <div>
+                                <h4>Ingredientes: </h4>
+                            </div>
+                            <div>
+                                <ul>
+                                    <li>Pão Brioche</li>
+                                    <li>2 Hambúrgueres de Angus</li>
+                                    <li>Cheddar</li>
+                                    <li>Bacon</li>
+                                </ul>
+                                <hr>
+                                <ul>
+                                    <li>1 Coca cola lata</li>
+                                    <li>1 Porção de batata frita</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="chicken flex-column" style="display: none;">
+                            <div>
+                                <h4>Ingredientes: </h4>
+                            </div>
+                            <div>
+                                <ul>
+                                    <li>Pão Francês</li>
+                                    <li>Hambúrguer de Frango</li>
+                                    <li>Maionese de Limão Siciliano</li>
+                                    <li>Mix de salada de Ruúcula</li>
+                                    <li>Tomate</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="chicken_combo flex-column" style="display: none;">
+                            <div>
+                                <h4>Ingredientes: </h4>
+                            </div>
+                            <div>
+                                <ul>
+                                    <li>Pão Francês</li>
+                                    <li>Hambúrguer de Frango</li>
+                                    <li>Maionese de Limão Siciliano</li>
+                                    <li>Mix de salada de Ruúcula</li>
+                                    <li>Tomate</li>
+                                </ul>
+                                <hr>
+                                <ul>
+                                    <li>1 Coca cola lata</li>
+                                    <li>1 Porção de batata frita</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mt-3" id="botao_etapa_2">
+                        <button type="submit" class="btn etapa_2">Próxima Etapa</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PEDIDO DE BEBIDA -->
+            <div class="row mt-3" id="pedido_bebida" style="display:none;">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="bebida" class="form-label">Bebidas</label>
+                        <select id="bebida" class="form-select">
+                            <option disabled selected>Selecione...</option>
+                            <optgroup label="Refrigerantes">
+                                <option value="Coca-Cola">Coca</option>
+                                <option value="Pepsi">Pepsi</option>
+                            </optgroup>
+                            <optgroup label="Cervejas">
+                                <option value="Brahma">Brahma</option>
+                                <option value="Amstel">Amstel</option>
+                            </optgroup>
+                            <optgroup label="Outros">
+                                <option value="Água">Agua</option>
+                            </optgroup>
+                        </select>
+                        <div class="form-group mt-3">
+                            <label for="preco_bebida">Preço</label>
+                            <input type="text" class="form-control mt-1" id="preco_bebida" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <img src="./src/img/sem_imagem.png" alt="" class="img-lanche">
+                    </div>
+                    <div class="col-12 mt-3" id="botao">
+                        <button type="submit" class="btn etapa_3">Confirmar Pedido</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FORMAS DE PAGAMENTO -->
+            <div class="row mt-3" id="pagamento" style="display: none;">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="forma_pagamento" class="form-label">Forma de pagamento</label>
+                        <select id="forma_pagamento" class="form-select">
+                            <option disabled selected>Selecione...</option>
+                            <option value="Cartão de crédito">Cartão de crédito</option>
+                            <option value="Cartão de débito">Cartão de débito</option>
+                            <option value="Pix">Pix</option>
+                            <option value="Dinheiro">Dinheiro</option>
+                        </select>
+                        <p>Caso sua escolha seja pix, enviar o comprovante assim que efetuar o pedido</p>
+                    </div>
+                    <div class="col-md-4 justify-content-center chave_pix text-center" style="display: none;">
+                        <label for="chave-pix" class="form-label">Chave pix:</label>
+                        <p>c4c0cd2f-e0b9-4697-af80-0600e14e062e</p>
+                    </div>
+                    <div class="col-md-4 chave_pix justify-content-center" id="qrcode" style="display: none;">
+                        <img src="./src/img/qrcode.png" style="width: 250px">
+                    </div>
+                    
+                    <div class="col-md-2 dinheiro" style="display: none;">
+                        <label for="troco" class="form-label">Troco para quanto:</label>
+                        <input type="number" id="troco" class="form-control" placeholder="R$" name="troco">
+                    </div>
+
+                    <div class="col-12 mt-3" id="botao">
+                        <button type="submit" class="btn confirmar_pedido">Confirmar Pedido</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="pedido"></div>
+
+            <div class="col-12 mt-3" style="display: none;" id="link_wpp">
+                <a href="" id="finalizar_pedido" class="enviar_pedido mb-3">Enviar Pedido</a>
+            </div>
+            
+            <hr>
+        </form>
+        <div class="row col-12">
+            <div class="col-12 text-center">
+                <div class="row">
+                    <div>
+                        <p>
+                            Desenvolvido por Lucas Steinbach
+                        </p>
+                    </div>
+                    <div class="col-12 row">
+                        <div class="col-6 d-flex justify-content-end rodape">
+                            <a href="https://api.whatsapp.com/send?phone=5534992021394&text=Ol%C3%A1%20Lucas%2C%20gostaria%20de%20fazer%20um%20or%C3%A7amento%20de%20site.">
+                                <i class="fa-brands fa-whatsapp m-2"></i>
+                            </a>
+                        </div>
+                        <div class="col-6 d-flex rodape">
+                            <a href="https://www.instagram.com/lucassteinbach/">
+                                <i class="fa-brands fa-instagram m-2"></i>
+                            </a>
+                        </div>
+                        
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <script src="./src/js/jquery.mask.js"></script>
+    <script src="./src/js/buscar_cep.js"></script>
+    <script src="./src/js/validate.js"></script>
+    <script src="./src/js/geral.js"></script>
+
+</body>
+
+</html>
