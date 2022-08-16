@@ -283,6 +283,7 @@ $(document).ready(function () {
             $('.dinheiro').css('display', 'none');
         } else if (pix === 'Dinheiro') {
             $('.dinheiro').css('display', 'block');
+            $('.valor_pedido').css('display', 'block');
             $('.chave_pix').css('display', 'none');
         } else {
             $('.chave_pix').css('display', 'none');
@@ -369,12 +370,13 @@ $(document).ready(function () {
         var taxa_entrega = $('#taxa_entrega').val().replace('R$ ', '').replace(',', '').replace('00', '');
         var numero = $('#numero').val();
         var telefone = $('#telefone').val();
+        var residencia = $('#residencia').val();
         var apartamento = $('#apartamento').val();
         var bloco = $('#bloco').val();
         var array = [];
 
         // Faz um push nos dados o usuário para verificar se os valores foram preenchidos antes de passar para a próxima fase
-        array.push(nome, cep, numero, telefone);
+        array.push(nome, cep, numero, telefone, residencia);
 
         switch (array === '') {
             case array[0] === '' ? $('#validacao-nome').css('display', 'block'):
@@ -388,6 +390,9 @@ $(document).ready(function () {
                     break;
             case array[3] === '' ? $('#validacao-telefone').css('display', 'block'):
                 $('#validacao-telefone').css('display', 'none'):
+                    break;
+            case array[4] === '' ? $('#validacao-residencia').css('display', 'block'):
+                $('#validacao-residencia').css('display', 'none'):
                     break;
         }
 
@@ -414,6 +419,8 @@ $(document).ready(function () {
                         var preco_bebida = $('#preco_bebida').val();
                         var preco_total = parseFloat(preco_lanche) + parseFloat(preco_bebida) + parseFloat(taxa_entrega);
 
+                        $('#valor_pedido').html('R$ ' + preco_total);
+
                         // se o cliente nao selecionar a bebida será travado
                         if (bebida !== null) {
                             $('#pedido_bebida').css('display', 'none');
@@ -425,154 +432,188 @@ $(document).ready(function () {
 
                                 var forma_pagamento = $('#forma_pagamento').val();
                                 var troco = $('#troco').val();
-
-                                // se o cliente nao selecionar a forma de pagamento será travado
-                                if (forma_pagamento !== null) {
-                                    $('#pagamento').css('display', 'none');
-                                    $('#pedido').fadeIn().css('display', 'block');
-
-                                    var telefone_replace = telefone.replace("(", "")
-                                        .replace(")", "").replace(" ", "").replace(" ",
-                                            "").replace("-", "");
-
-                                    if (troco != '' && apartamento != '' && bloco != '') {
-                                        // se tiver troco, ap e bloco no pedido, entrara neste bloco 
-                                        var pedido = '*Agradecemos pela preferência, seu pedido está sendo preparado!*%0A*Nome:* ' + nome +
-                                            '%0A*Rua:* ' + rua + ' Nº ' + numero +
-                                            '%0A*Bairro:* ' + bairro +
-                                            '%0A*Apartamento:* ' + apartamento +
-                                            '%0A*Bloco:* ' + bloco +
-                                            '%0A*Telefone:* ' + telefone +
-                                            '%0A*Lanche:* ' + lanche +
-                                            '%0A*Bebida:* ' + bebida +
-                                            '%0A*Observações:* ' + observacoes +
-                                            '%0A*Preço Total:* R$ ' + preco_total +
-                                            '%0A*Troco para:* R$ ' + troco +
-                                            '%0A*Forma de pagamento:* ' + forma_pagamento;
-
-                                        // aqui monta o html de pedido na página
-                                        $('#pedido').html(
-                                            '<div class="row col-12"><h4>Agradecemos pela preferência, agora só resta enviar o pedido &#x1F60A;</h4></div> <div class="row col-12"><div><strong>Nome: </strong>' +
-                                            nome + '</div></div>' +
-                                            '<div class="row col-12"><div><strong>Rua: </strong>' + rua +
-                                            ' Nº ' + numero + '</div></div>' +
-                                            '<div class="row col-12"><div><strong>Bairro: </strong>' + bairro + '</div></div>' +
-                                            '<div class="row col-12"><div><strong>Apartamento: </strong> ' + apartamento + '</div></div>' +
-                                            '<div class="row col-12"><div><strong>Bloco: </strong> ' + bloco + '</div></div>' +
-                                            '<div class="row col-12"><div><strong>Telefone: </strong>' +
-                                            telefone + '</div></div>' +
-                                            '<div class="row col-12"><div><strong>Lanche: </strong>' + lanche + '</div></div>' +
-                                            '<div class="row col-12"><div><strong>Observações: </strong>' + observacoes + '</div></div>' +
-                                            '<div class="row col-12"><div><strong>Bebida: </strong>' + bebida + '</div></div>' +
-                                            '<div class="row col-12"><div><strong>Valor Total: </strong>R$ ' + parseFloat(preco_total) + ',00</div></div>' +
-                                            '<div class="row col-12"><div><strong>Troco para : </strong> R$ ' + troco + '</div></div>' +
-                                            '<div class="row col-12"><div><strong>Forma de pagamento: </strong> ' + forma_pagamento + '</div></div>');
-                                    } else if (troco === '' && apartamento != '' && bloco != '') {
-                                        // se tiver ap e bloco no pedido, entrara neste bloco 
-                                        
-                                        // variavel pedido monta o pedido que será enviado no html 
-                                        var pedido = '*Agradecemos pela preferência, seu pedido está sendo preparado!*%0A*Nome:* ' + nome +
-                                            '%0A*Rua:* ' + rua + ' Nº ' + numero +
-                                            '%0A*Bairro:* ' + bairro +
-                                            '%0A*Apartamento:* ' + apartamento +
-                                            '%0A*Bloco:* ' + bloco +
-                                            '%0A*Telefone:* ' + telefone +
-                                            '%0A*Lanche:* ' + lanche +
-                                            '%0A*Bebida:* ' + bebida +
-                                            '%0A*Observações:* ' + observacoes +
-                                            '%0A*Preço Total:* R$ ' + preco_total +
-                                            '%0A*Forma de pagamento:* ' + forma_pagamento;
-
-                                        // aqui monta o html de pedido na página
-                                        $('#pedido').html(
-                                            '<div class="row col-12"><h4>Agradecemos pela preferência, agora só resta enviar o pedido &#x1F60A;</h4></div> <div class="row col-12"><div><strong>Nome: </strong>' +
-                                            nome + '</div></div>' +
-                                            '<div class="row col-12"><div><strong>Rua: </strong>' + rua +
-                                            ' Nº ' + numero + '</div></div>' +
-                                            '<div class="row col-12"><div><strong>Bairro: </strong>' + bairro + '</div></div>' +
-                                            '<div class="row col-12"><div><strong>Apartamento: </strong> ' + apartamento + '</div></div>' +
-                                            '<div class="row col-12"><div><strong>Bloco: </strong> ' + bloco + '</div></div>' +
-                                            '<div class="row col-12"><div><strong>Telefone: </strong>' +
-                                            telefone + '</div></div>' +
-                                            '<div class="row col-12"><div><strong>Lanche: </strong>' + lanche + '</div></div>' +
-                                            '<div class="row col-12"><div><strong>Observações: </strong>' + observacoes + '</div></div>' +
-                                            '<div class="row col-12"><div><strong>Bebida: </strong>' + bebida + '</div></div>' +
-                                            '<div class="row col-12"><div><strong>Valor Total: </strong>R$ ' + parseFloat(preco_total) + ',00</div></div>' +
-                                            '<div class="row col-12"><div><strong>Forma de pagamento: </strong> ' + forma_pagamento + '</div></div>');
-                                    } else if (troco != '' && apartamento != '') {
-                                        // se tiver ap e troco no pedido, entrara neste bloco 
-
-                                        // variavel pedido monta o pedido que será enviado no html 
-                                        var pedido = '*Agradecemos pela preferência, seu pedido está sendo preparado!*%0A*Nome:* ' + nome +
-                                            '%0A*Rua:* ' + rua + ' Nº ' + numero +
-                                            '%0A*Bairro:* ' + bairro +
-                                            '%0A*Apartamento:* ' + apartamento +
-                                            '%0A*Telefone:* ' + telefone +
-                                            '%0A*Lanche:* ' + lanche +
-                                            '%0A*Bebida:* ' + bebida +
-                                            '%0A*Observações:* ' + observacoes +
-                                            '%0A*Preço Total:* R$ ' + preco_total +
-                                            '%0A*Troco para:* R$ ' + troco +
-                                            '%0A*Forma de pagamento:* ' + forma_pagamento;
-
-                                        // aqui monta o html de pedido na página
-                                        $('#pedido').html(
-                                            '<div class="row col-12"><h4>Agradecemos pela preferência, agora só resta enviar o pedido &#x1F60A;</h4></div> <div class="row col-12"><div><strong>Nome: </strong>' +
-                                            nome + '</div></div>' +
-                                            '<div class="row col-12"><div><strong>Rua: </strong>' + rua +
-                                            ' Nº ' + numero + '</div></div>' +
-                                            '<div class="row col-12"><div><strong>Bairro: </strong>' + bairro + '</div></div>' +
-                                            '<div class="row col-12"><div><strong>Apartamento: </strong> ' + apartamento + '</div></div>' +
-                                            '<div class="row col-12"><div><strong>Telefone: </strong>' +
-                                            telefone + '</div></div>' +
-                                            '<div class="row col-12"><div><strong>Lanche: </strong>' + lanche + '</div></div>' +
-                                            '<div class="row col-12"><div><strong>Observações: </strong>' + observacoes + '</div></div>' +
-                                            '<div class="row col-12"><div><strong>Bebida: </strong>' + bebida + '</div></div>' +
-                                            '<div class="row col-12"><div><strong>Valor Total: </strong>R$ ' + parseFloat(preco_total) + ',00</div></div>' +
-                                            '<div class="row col-12"><div><strong>Troco para : </strong> R$ ' + troco + '</div></div>' +
-                                            '<div class="row col-12"><div><strong>Forma de pagamento: </strong> ' + forma_pagamento + '</div></div>');
-                                    } else {
-                                        // se não tiver troco, ap e bloco no pedido, entrara neste bloco 
-
-                                        // variavel pedido monta o pedido que será enviado no html 
-                                        var pedido = '*Agradecemos pela preferência, seu pedido está sendo preparado!*%0A*Nome:* ' + nome +
-                                            '%0A*Rua:* ' + rua + ' Nº ' + numero +
-                                            '%0A*Bairro:* ' + bairro +
-                                            '%0A*Telefone:* ' + telefone +
-                                            '%0A*Lanche:* ' + lanche +
-                                            '%0A*Bebida:* ' + bebida +
-                                            '%0A*Observações:* ' + observacoes +
-                                            '%0A*Preço Total:* R$ ' + preco_total +
-                                            '%0A*Forma de pagamento:* ' + forma_pagamento;
-
-                                        // aqui monta o html de pedido na página
-                                        $('#pedido').html(
-                                            '<div class="row col-12"><h4>Agradecemos pela preferência, agora só resta enviar o pedido &#x1F60A;</h4></div> <div class="row col-12"><div><strong>Nome: </strong>' +
-                                            nome + '</div></div>' +
-                                            '<div class="row col-12"><div><strong>Rua: </strong>' + rua +
-                                            ' Nº ' + numero + '</div></div>' +
-                                            '<div class="row col-12"><div><strong>Bairro: </strong>' + bairro + '</div></div>' +
-                                            '<div class="row col-12"><div><strong>Telefone: </strong>' +
-                                            telefone + '</div></div>' +
-                                            '<div class="row col-12"><div><strong>Lanche: </strong>' + lanche + '</div></div>' +
-                                            '<div class="row col-12"><div><strong>Observações: </strong>' + observacoes + '</div></div>' +
-                                            '<div class="row col-12"><div><strong>Bebida: </strong>' + bebida + '</div></div>' +
-                                            '<div class="row col-12"><div><strong>Valor Total: </strong>R$ ' + parseFloat(preco_total) + '</div></div>' +
-                                            '<div class="row col-12"><div><strong>Forma de pagamento: </strong> ' + forma_pagamento + '</div></div>');
-                                    }
-
-                                    // ao finalizar o pedido será gerado o link com o pedido do whatsapp para redirecionar o cliente 
-                                    var fin_ped = $('#finalizar_pedido').attr('href',
-                                        'https://api.whatsapp.com/send?phone=55' +
-                                        telefone_replace + '&text=' + pedido,
-                                        "_blank");
-
-                                    $('#botao').css('display', 'none');
-                                    $('#link_wpp').fadeIn().css('display', 'flex');
+                                if(troco != '' && troco < preco_total) {
+                                    alert('O valor do pagamento deve ser maior que o valor do pedido, para validar o troco');
                                 } else {
-                                    // caso nao aja informações sera retornado a este else
-                                    alert('Porfavor Selecione uma forma de pagamento');
+                                    // se o cliente nao selecionar a forma de pagamento será travado
+                                    if (forma_pagamento !== null) {
+                                        $('#pagamento').css('display', 'none');
+                                        $('#pedido').fadeIn().css('display', 'block');
+
+                                        var telefone_replace = telefone.replace("(", "")
+                                            .replace(")", "").replace(" ", "").replace(" ",
+                                                "").replace("-", "");
+
+                                        if (troco != '' && apartamento != '' && bloco != '') {
+                                            // se tiver troco, ap e bloco no pedido, entrara neste bloco 
+                                            var pedido = '*Agradecemos pela preferência, seu pedido está sendo preparado!*%0A*Nome:* ' + nome +
+                                                '%0A*Rua:* ' + rua + ' Nº ' + numero +
+                                                '%0A*Bairro:* ' + bairro +
+                                                '%0A*Apartamento:* ' + apartamento +
+                                                '%0A*Bloco:* ' + bloco +
+                                                '%0A*Telefone:* ' + telefone +
+                                                '%0A*Lanche:* ' + lanche +
+                                                '%0A*Bebida:* ' + bebida +
+                                                '%0A*Observações:* ' + observacoes +
+                                                '%0A*Preço Total:* R$ ' + preco_total +
+                                                '%0A*Troco para:* R$ ' + troco +
+                                                '%0A*Forma de pagamento:* ' + forma_pagamento;
+
+                                            // aqui monta o html de pedido na página
+                                            $('#pedido').html(
+                                                '<div class="row col-12"><h4>Agradecemos pela preferência, agora só resta enviar o pedido &#x1F60A;</h4></div> <div class="row col-12"><div><strong>Nome: </strong>' +
+                                                nome + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Rua: </strong>' + rua +
+                                                ' Nº ' + numero + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Bairro: </strong>' + bairro + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Apartamento: </strong> ' + apartamento + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Bloco: </strong> ' + bloco + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Telefone: </strong>' +
+                                                telefone + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Lanche: </strong>' + lanche + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Observações: </strong>' + observacoes + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Bebida: </strong>' + bebida + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Valor Total: </strong>R$ ' + parseFloat(preco_total) + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Troco para : </strong> R$ ' + troco + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Forma de pagamento: </strong> ' + forma_pagamento + '</div></div>');
+                                        } else if (troco === '' && apartamento != '' && bloco != '') {
+                                            // se tiver ap e bloco no pedido, entrara neste bloco 
+                                            
+                                            // variavel pedido monta o pedido que será enviado no html 
+                                            var pedido = '*Agradecemos pela preferência, seu pedido está sendo preparado!*%0A*Nome:* ' + nome +
+                                                '%0A*Rua:* ' + rua + ' Nº ' + numero +
+                                                '%0A*Bairro:* ' + bairro +
+                                                '%0A*Apartamento:* ' + apartamento +
+                                                '%0A*Bloco:* ' + bloco +
+                                                '%0A*Telefone:* ' + telefone +
+                                                '%0A*Lanche:* ' + lanche +
+                                                '%0A*Bebida:* ' + bebida +
+                                                '%0A*Observações:* ' + observacoes +
+                                                '%0A*Preço Total:* R$ ' + preco_total +
+                                                '%0A*Forma de pagamento:* ' + forma_pagamento;
+
+                                            // aqui monta o html de pedido na página
+                                            $('#pedido').html(
+                                                '<div class="row col-12"><h4>Agradecemos pela preferência, agora só resta enviar o pedido &#x1F60A;</h4></div> <div class="row col-12"><div><strong>Nome: </strong>' +
+                                                nome + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Rua: </strong>' + rua +
+                                                ' Nº ' + numero + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Bairro: </strong>' + bairro + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Apartamento: </strong> ' + apartamento + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Bloco: </strong> ' + bloco + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Telefone: </strong>' +
+                                                telefone + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Lanche: </strong>' + lanche + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Observações: </strong>' + observacoes + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Bebida: </strong>' + bebida + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Valor Total: </strong>R$ ' + parseFloat(preco_total) + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Forma de pagamento: </strong> ' + forma_pagamento + '</div></div>');
+                                        } else if (troco != '' && apartamento != '') {
+                                            // se tiver ap e troco no pedido, entrara neste bloco 
+
+                                            // variavel pedido monta o pedido que será enviado no html 
+                                            var pedido = '*Agradecemos pela preferência, seu pedido está sendo preparado!*%0A*Nome:* ' + nome +
+                                                '%0A*Rua:* ' + rua + ' Nº ' + numero +
+                                                '%0A*Bairro:* ' + bairro +
+                                                '%0A*Apartamento:* ' + apartamento +
+                                                '%0A*Telefone:* ' + telefone +
+                                                '%0A*Lanche:* ' + lanche +
+                                                '%0A*Bebida:* ' + bebida +
+                                                '%0A*Observações:* ' + observacoes +
+                                                '%0A*Preço Total:* R$ ' + preco_total +
+                                                '%0A*Troco para:* R$ ' + troco +
+                                                '%0A*Forma de pagamento:* ' + forma_pagamento;
+
+                                            // aqui monta o html de pedido na página
+                                            $('#pedido').html(
+                                                '<div class="row col-12"><h4>Agradecemos pela preferência, agora só resta enviar o pedido &#x1F60A;</h4></div> <div class="row col-12"><div><strong>Nome: </strong>' +
+                                                nome + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Rua: </strong>' + rua +
+                                                ' Nº ' + numero + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Bairro: </strong>' + bairro + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Apartamento: </strong> ' + apartamento + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Telefone: </strong>' +
+                                                telefone + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Lanche: </strong>' + lanche + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Observações: </strong>' + observacoes + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Bebida: </strong>' + bebida + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Valor Total: </strong>R$ ' + parseFloat(preco_total) + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Troco para : </strong> R$ ' + troco + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Forma de pagamento: </strong> ' + forma_pagamento + '</div></div>');
+                                        } else if (troco != '') {
+                                            // variavel pedido monta o pedido que será enviado no html 
+                                            var pedido = '*Agradecemos pela preferência, seu pedido está sendo preparado!*%0A*Nome:* ' + nome +
+                                                '%0A*Rua:* ' + rua + ' Nº ' + numero +
+                                                '%0A*Bairro:* ' + bairro +
+                                                '%0A*Telefone:* ' + telefone +
+                                                '%0A*Lanche:* ' + lanche +
+                                                '%0A*Bebida:* ' + bebida +
+                                                '%0A*Observações:* ' + observacoes +
+                                                '%0A*Preço Total:* R$ ' + preco_total +
+                                                '%0A*Troco para:* R$ ' + troco +
+                                                '%0A*Forma de pagamento:* ' + forma_pagamento;
+
+                                            // aqui monta o html de pedido na página
+                                            $('#pedido').html(
+                                                '<div class="row col-12"><h4>Agradecemos pela preferência, agora só resta enviar o pedido &#x1F60A;</h4></div> <div class="row col-12"><div><strong>Nome: </strong>' +
+                                                nome + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Rua: </strong>' + rua +
+                                                ' Nº ' + numero + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Bairro: </strong>' + bairro + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Telefone: </strong>' +
+                                                telefone + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Lanche: </strong>' + lanche + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Observações: </strong>' + observacoes + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Bebida: </strong>' + bebida + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Valor Total: </strong>R$ ' + parseFloat(preco_total) + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Troco para : </strong> R$ ' + troco + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Forma de pagamento: </strong> ' + forma_pagamento + '</div></div>');
+
+                                        } else {
+                                            // se não tiver troco, ap e bloco no pedido, entrara neste bloco 
+
+                                            // variavel pedido monta o pedido que será enviado no html 
+                                            var pedido = '*Agradecemos pela preferência, seu pedido está sendo preparado!*%0A*Nome:* ' + nome +
+                                                '%0A*Rua:* ' + rua + ' Nº ' + numero +
+                                                '%0A*Bairro:* ' + bairro +
+                                                '%0A*Telefone:* ' + telefone +
+                                                '%0A*Lanche:* ' + lanche +
+                                                '%0A*Bebida:* ' + bebida +
+                                                '%0A*Observações:* ' + observacoes +
+                                                '%0A*Preço Total:* R$ ' + preco_total +
+                                                '%0A*Forma de pagamento:* ' + forma_pagamento;
+
+                                            // aqui monta o html de pedido na página
+                                            $('#pedido').html(
+                                                '<div class="row col-12"><h4>Agradecemos pela preferência, agora só resta enviar o pedido &#x1F60A;</h4></div> <div class="row col-12"><div><strong>Nome: </strong>' +
+                                                nome + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Rua: </strong>' + rua +
+                                                ' Nº ' + numero + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Bairro: </strong>' + bairro + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Telefone: </strong>' +
+                                                telefone + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Lanche: </strong>' + lanche + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Observações: </strong>' + observacoes + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Bebida: </strong>' + bebida + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Valor Total: </strong>R$ ' + parseFloat(preco_total) + '</div></div>' +
+                                                '<div class="row col-12"><div><strong>Forma de pagamento: </strong> ' + forma_pagamento + '</div></div>');
+                                        }
+
+                                        // ao finalizar o pedido será gerado o link com o pedido do whatsapp para redirecionar o cliente 
+                                        var fin_ped = $('#finalizar_pedido').attr('href',
+                                            'https://api.whatsapp.com/send?phone=55' +
+                                            telefone_replace + '&text=' + pedido,
+                                            "_blank");
+
+                                        $('#botao').css('display', 'none');
+                                        $('#link_wpp').fadeIn().css('display', 'flex');
+                                    } else {
+                                        // caso nao aja informações sera retornado a este else
+                                        alert('Porfavor Selecione uma forma de pagamento');
+                                    }
                                 }
+
+
                             });
                         } else {
                             // caso nao aja informações sera retornado a este else

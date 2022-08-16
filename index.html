@@ -75,6 +75,10 @@
                         <option value="Casa">Casa</option>
                         <option value="Apartamento">Apartamento</option>
                     </select>
+                    <div class="alert alert-warning fade show mt-2 alerta-validacao" role="alert" id="validacao-residencia"
+                        style="display: none;">
+                        preencha este campo!
+                    </div>
                 </div>
                 
                 <div class="col-md-2 res_ap" style="display: none;">
@@ -454,6 +458,11 @@
                     </div>
                     <div class="col-md-4 chave_pix justify-content-center" id="qrcode" style="display: none;">
                         <img src="./src/img/qrcode.png" style="width: 250px">
+                    </div>
+                    
+                    <div class="col-md-2 dinheiro" style="display: none;">
+                        <label for="valor_pedido" class="form-label">Valor do pedido:</label>
+                        <p id="valor_pedido"></p>
                     </div>
                     
                     <div class="col-md-2 dinheiro" style="display: none;">
